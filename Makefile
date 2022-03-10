@@ -18,3 +18,4 @@ solution.zip :
 .PHONY: clean
 clean:
 	rm -f *.o main?  *~
+	rm -f solution.zip
