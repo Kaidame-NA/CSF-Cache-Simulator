@@ -66,7 +66,7 @@ public:
      * Returns:
      *     an unsigned integer representing the number of load hits
      */
-    unsigned int getLoadHits();
+    unsigned int getLoadHits() const;
 
     /*
      * Get the number of load misses in the cache
@@ -74,7 +74,7 @@ public:
      * Returns:
      *     an unsigned integer representing the number of load misses
      */
-    unsigned int getLoadMisses();
+    unsigned int getLoadMisses() const;
 
     /*
      * Get the total number of loads in the cache
@@ -82,7 +82,7 @@ public:
      * Returns:
      *     an unsigned integer representing the number of total loads
      */
-    unsigned int getTotalLoads();
+    unsigned int getTotalLoads() const;
 
     /*
      * Get the total number of store hits in the cache
@@ -90,7 +90,7 @@ public:
      * Returns:
      *     an unsigned integer representing the number of store hits
      */
-    unsigned int getStoreHits();
+    unsigned int getStoreHits() const;
 
     /*
      * Get the total number of store misses in the cache
@@ -98,7 +98,7 @@ public:
      * Returns:
      *     an unsigned integer representing the total number of store hits
      */
-    unsigned int getStoreMisses();
+    unsigned int getStoreMisses() const;
 
     /*
      * Get the total number of stores in the cache
@@ -106,14 +106,14 @@ public:
      * Returns:
      *     an unsigned integer representing the total number of stores
      */
-    unsigned int getTotalStores();
+    unsigned int getTotalStores() const;
 
     /*
      * Get the total number of cycles taken by the cache
      * Returns:
      *     an unsigned integer representing the total number of cycles
      */
-    unsigned int getTotalCycles();
+    unsigned int getTotalCycles() const;
 
     /*
      * Given an address, perform a store at that address in accordance to the cache policies,

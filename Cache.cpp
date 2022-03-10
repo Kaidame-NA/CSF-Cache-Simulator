@@ -44,3 +44,42 @@ Cache::Cache(unsigned int nSets, unsigned int blocks, unsigned int bytes, string
     }
 }
 
+unsigned int Cache::getLoadHits() const {
+    // TODO 
+    return 0;
+}
+
+unsigned int Cache::getLoadMisses() const {
+    // TODO
+    return 0;
+}
+
+unsigned int Cache::getTotalLoads() const {
+    // TODO
+    return 0;
+}
+
+unsigned int Cache::getStoreHits() const {
+    return storeHits;
+}
+
+unsigned int Cache::getStoreMisses() const {
+    return storeMisses;
+}
+
+unsigned int Cache::getTotalStores() const {
+    return storeHits + storeMisses;
+}
+
+unsigned int Cache::getTotalCycles() const {
+    // TODO
+    return 0;
+}
+
+void Cache::store(unsigned int address) {
+    // TODO
+}
+
+void Cache::load(unsigned int address) {
+    // TODO
+}

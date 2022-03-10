@@ -10,3 +10,6 @@ ewang43 implementations:
     intLog2
     areParametersValid
     Cache constructor
+    getStoreHits
+    getStoreMisses
+    getTotalStores
