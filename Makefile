@@ -19,3 +19,4 @@ solution.zip :
 clean:
 	rm -f *.o main?  *~
 	rm -f solution.zip
+	rm -f csim
