@@ -6,3 +6,6 @@ schordi1 implementations:
 ewang43 implementations:
     Makefile
     main
+    isValidNonnegativeInt
+    intLog2
+    areParametersValid
