@@ -9,3 +9,4 @@ ewang43 implementations:
     isValidNonnegativeInt
     intLog2
     areParametersValid
+    Cache constructor

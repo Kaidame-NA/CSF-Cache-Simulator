@@ -38,6 +38,10 @@ int main(int argc, char **argv)
         cerr << "Invalid parameter\n";
         return INVALID_PARAMETER;
     }
+    string sets = argv[1], blocks = argv[2], bytes = argv[3];
+    string writeAllocate = argv[4], writeThrough = argv[5], replacementPolicy = argv[6];
+    
+    Cache cache(stoi(sets), stoi(blocks), stoi(bytes), writeAllocate, writeThrough, replacementPolicy);
 
     return NO_ERROR;
 }
