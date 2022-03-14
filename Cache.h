@@ -132,6 +132,9 @@ public:
      *     address - an unsigned int representing the memory address being loaded
      */
     void load(unsigned int address);
+
+
+    unsigned int uintLog2(unsigned int x);
 };
 
 #endif

@@ -69,19 +69,58 @@ unsigned int Cache::getTotalStores() const {
 }
 
 unsigned int Cache::getTotalCycles() const {
-    return storeHits + storeMisses + loadHits + loadMisses;
+    return totalCycles;
 }
 
 void Cache::store(unsigned int address) {
     unsigned int tempAddress = address;
-    unsigned int set_position =  tempAddress >> intLog2(blockSize)
+    unsigned int index =  (tempAddress >> uintLog2(blockSize)) % uintLog2(numSets);
+    unsigned int tag = tempAddress >> uintLog2(numSets);
+    bool found = false;
+    int blockPos;
+    int emptyBlockPos = -1;
+    // Loops through all the blocks in the set to check if a block with the given tag exists
+    // Stores the position of the block and sets a boolean value to true if the block exists
+    for (int i = 0; i < blocksPerSet; ++i) {
+        if (sets[index][i].tag == tag && sets[index][i].valid) {
+            found == true;
+            BlockPos = i;
+            break;
+        }
+        if (!sets[index][i].valid) {
+            emptyBlockPos = i;
+        }
+    }
+    if (!found) {
+        storeMisses++;
+        if (writeAllocate == "no-write-allocate") {
+            totalCycles += 100;
+        } else {
+            totalCycles++;
+            if (emptyBlockPos == -1) {
+                // TODO: Eviction Code
+            } else {
+                sets[index][emptyBlockPos].tag = tag;
+                sets[index][emptyBlockPos].valid = true;
+            }
+        }
+    } else {
+        storeHits++;
+        sets[index][blockPos].tag = tag;
+        if (writeThrough == "write-through") {
+            totalCycles += 101;
+        } else {
+            totalCycles++;
+            sets[index][blockPos].dirty = true;
+        }
+    }
 }
 
 void Cache::load(unsigned int address) {
     // TODO
 }
 
-unsigned int intLog2(unsigned int x)
+unsigned int uintLog2(unsigned int x)
 {
     unsigned int result = 0;
     while (x != 1)
