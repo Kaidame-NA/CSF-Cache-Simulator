@@ -45,6 +45,27 @@ private:
     unsigned int currentTimestamp;
 
     std::vector<Set> sets;
+
+    /*
+     * Get the pointer to a block with the given address
+     *
+     * Parameters:
+     *     index - an unsigned int with the index of the address
+     *     tag - an unsigned int with the tag of the address
+     * Returns:
+     *     a pointer to the Block with the corresponding address. return a null pointer if the Block isn't found
+     */
+    Block *getBlock(unsigned int index, unsigned int tag);
+
+    /*
+     * Get the pointer to a block to be evicted
+     * 
+     * Parameters:
+     *     index - an unsigned int with the index of the address which gives us the set to evict from
+     * Returns:
+     *     a pointer to the Block to be evicted or overwritten
+     */
+    Block *getBlockToBeEvicted(unsigned int index);
 public:
     /*
      * Construct a cache using the given parameters.

@@ -81,67 +81,75 @@ unsigned int Cache::getTotalCycles() const
 
 void Cache::store(unsigned int address)
 {
-    unsigned int tempAddress = address;
-    unsigned int index = (tempAddress >> uintLog2(blockSize)) % uintLog2(numSets);
-    unsigned int tag = tempAddress >> uintLog2(numSets);
-    bool found = false;
-    int blockPos;
-    int emptyBlockPos = -1;
-    // Loops through all the blocks in the set to check if a block with the given tag exists
-    // Stores the position of the block and sets a boolean value to true if the block exists
-    for (unsigned int i = 0; i < blocksPerSet; ++i)
+    unsigned int index = (address >> uintLog2(blockSize)) % uintLog2(numSets);
+    unsigned int tag = address >> uintLog2(numSets);
+
+    Block *relevantBlock = getBlock(index, tag);
+    if (relevantBlock == nullptr)
     {
-        if (sets[index].blocks[i].tag == tag && sets[index].blocks[i].valid)
+        ++storeMisses;
+        if (writeAllocate == "write-allocate")
         {
-            found = true;
-            blockPos = i;
-            break;
-        }
-        if (!sets[index].blocks[i].valid)
-        {
-            emptyBlockPos = i;
-        }
-    }
-    if (!found)
-    {
-        storeMisses++;
-        if (writeAllocate == "no-write-allocate")
-        {
-            totalCycles += 100;
-        }
-        else
-        {
-            totalCycles++;
-            if (emptyBlockPos == -1)
+            relevantBlock = getBlockToBeEvicted(index);
+            if (relevantBlock->dirty)
             {
-                // TODO: Eviction Code
+                totalCycles += 100 * blockSize / 4;
+                relevantBlock->dirty = false;
             }
-            else
-            {
-                sets[index].blocks[emptyBlockPos].tag = tag;
-                sets[index].blocks[emptyBlockPos].valid = true;
-            }
+            relevantBlock->tag = tag;
+            relevantBlock->loadTimestamp = currentTimestamp;
+            relevantBlock->accessTimestamp = currentTimestamp;
+            relevantBlock->valid = true;
         }
     }
     else
     {
-        storeHits++;
-        sets[index].blocks[blockPos].tag = tag;
-        if (writeThrough == "write-through")
+        ++storeHits;
+    }
+    if (writeThrough == "write-through")
+    {
+        totalCycles += 100 * blockSize / 4;
+        // Cache needs to be written to as well if the block is in the cache
+        if (relevantBlock != nullptr)
         {
-            totalCycles += 101;
+            ++totalCycles;
         }
-        else
-        {
-            totalCycles++;
-            sets[index].blocks[blockPos].dirty = true;
-        }
+    }
+    else
+    {
+        ++totalCycles;
+        relevantBlock->dirty = true;
     }
 }
 
 void Cache::load(unsigned int address)
 {
     // TODO
+}
+
+Cache::Block *Cache::getBlock(unsigned int index, unsigned int tag)
+{
+    for (unsigned int i = 0; i < blocksPerSet; ++i)
+    {
+        if (sets[index].blocks[i].tag == tag && sets[index].blocks[i].valid)
+        {
+            return &(sets[index].blocks[i]);
+        }
+    }
+    return nullptr;
+}
+
+Cache::Block *Cache::getBlockToBeEvicted(unsigned index)
+{
+    for (unsigned int i = 0; i < blocksPerSet; ++i)
+    {
+        if (!sets[index].blocks[i].valid)
+        {
+            return &(sets[index].blocks[i]);
+        }
+    }
+    // TODO: Other eviction policies
+    return nullptr;
 }
 
 unsigned int Cache::uintLog2(unsigned int x)
