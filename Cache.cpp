@@ -126,7 +126,30 @@ void Cache::store(unsigned int address)
 
 void Cache::load(unsigned int address)
 {
-    // TODO
+    unsigned int index = (address >> uintLog2(blockSize)) % uintLog2(numSets);
+    unsigned int tag = address >> uintLog2(numSets);
+
+    Block *relevantBlock = getBlock(index, tag);
+    if (relevantBlock == nullptr) {
+        loadMisses++;
+        relevantBlock = getBlockToBeEvicted(index);
+            if (relevantBlock->dirty)
+            {
+                totalCycles += 100 * blockSize / 4;
+                relevantBlock->dirty = false;
+            }
+        // I added an extra 1 at the end because after it loads stuff from memory to the cache it still has to read form the cache 
+        totalCycles += 100 * blockSize / 4 + 1;
+        relevantBlock->tag = tag;
+        relevantBlock->loadTimestamp = currentTimestamp;
+        relevantBlock->accessTimestamp = currentTimestamp;
+        relevantBlock->valid = true;
+    }
+    else 
+    {
+        ++loadHits;
+        ++totalCycles;
+    }
 }
 
 Cache::Block *Cache::getBlock(unsigned int index, unsigned int tag)
