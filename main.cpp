@@ -45,19 +45,17 @@ int main(int argc, char **argv)
     Cache cache(stoi(sets), stoi(blocks), stoi(bytes), writeAllocate, writeThrough, replacementPolicy);
 
     char command;
-    long int address, value;
-    cin >> command;
-    cin >> address;
-    cin >> value;
+    string address, value;
+    cin >> command >> address >> value;
     while (command)
     {
         if (command == 's') 
         {
-            cache.store(address);
+            cache.store(stoi(address, 0 , 16));
         }
         else if (command == 'l')
         {
-            cache.load(address);
+            cache.load(stoi(address, 0 , 16));
         }
     }
     cout << "Total loads: " << cache.getTotalLoads() << "\nTotal stores: " << cache.getTotalStores() << "\nLoad hits: " << cache.getLoadHits() << "\nLoad misses: " << cache.getLoadMisses() << "\nStore hits: " << cache.getStoreHits() << "\nStore misses: " << cache.getStoreMisses() << "\nTotal cycle: " << cache.getTotalCycles() << "\n";
