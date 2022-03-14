@@ -119,6 +119,7 @@ void Cache::store(unsigned int address)
     {
         ++totalCycles;
         relevantBlock->dirty = true;
+        relevantBlock->accessTimestamp = currentTimestamp;
     }
 }
 

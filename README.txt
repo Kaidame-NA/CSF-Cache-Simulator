@@ -20,3 +20,5 @@ ewang43 implementations:
     getStoreMisses
     getTotalStores
     load
+    getBlock
+    getBlockToBeEvicted
