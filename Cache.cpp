@@ -121,6 +121,7 @@ void Cache::store(unsigned int address)
         relevantBlock->dirty = true;
         relevantBlock->accessTimestamp = currentTimestamp;
     }
+    ++currentTimestamp;
 }
 
 void Cache::load(unsigned int address)
