@@ -143,15 +143,21 @@ Cache::Block *Cache::getBlock(unsigned int index, unsigned int tag)
 
 Cache::Block *Cache::getBlockToBeEvicted(unsigned index)
 {
+    unsigned int oldestBlockTime= currentTimestamp;
+    unsigned int oldestBlockIndex;
     for (unsigned int i = 0; i < blocksPerSet; ++i)
     {
         if (!sets[index].blocks[i].valid)
         {
             return &(sets[index].blocks[i]);
         }
+        if (sets[index].blocks[i].accessTimestamp < oldestBlockIndex) {
+            oldestBlockTime = sets[index].blocks[i].accessTimestamp;
+            oldestBlockIndex = i;
+        }
     }
     // TODO: Other eviction policies
-    return nullptr;
+    return &(sets[index].blocks[oldestBlockIndex]);
 }
 
 unsigned int Cache::uintLog2(unsigned int x)
