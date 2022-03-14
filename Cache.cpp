@@ -44,83 +44,107 @@ Cache::Cache(unsigned int nSets, unsigned int blocks, unsigned int bytes, string
     }
 }
 
-unsigned int Cache::getLoadHits() const {
+unsigned int Cache::getLoadHits() const
+{
     return loadHits;
 }
 
-unsigned int Cache::getLoadMisses() const {
+unsigned int Cache::getLoadMisses() const
+{
     return loadMisses;
 }
 
-unsigned int Cache::getTotalLoads() const {
+unsigned int Cache::getTotalLoads() const
+{
     return loadHits + loadMisses;
 }
 
-unsigned int Cache::getStoreHits() const {
+unsigned int Cache::getStoreHits() const
+{
     return storeHits;
 }
 
-unsigned int Cache::getStoreMisses() const {
+unsigned int Cache::getStoreMisses() const
+{
     return storeMisses;
 }
 
-unsigned int Cache::getTotalStores() const {
+unsigned int Cache::getTotalStores() const
+{
     return storeHits + storeMisses;
 }
 
-unsigned int Cache::getTotalCycles() const {
+unsigned int Cache::getTotalCycles() const
+{
     return totalCycles;
 }
 
-void Cache::store(unsigned int address) {
+void Cache::store(unsigned int address)
+{
     unsigned int tempAddress = address;
-    unsigned int index =  (tempAddress >> uintLog2(blockSize)) % uintLog2(numSets);
+    unsigned int index = (tempAddress >> uintLog2(blockSize)) % uintLog2(numSets);
     unsigned int tag = tempAddress >> uintLog2(numSets);
     bool found = false;
     int blockPos;
     int emptyBlockPos = -1;
     // Loops through all the blocks in the set to check if a block with the given tag exists
     // Stores the position of the block and sets a boolean value to true if the block exists
-    for (int i = 0; i < blocksPerSet; ++i) {
-        if (sets[index][i].tag == tag && sets[index][i].valid) {
-            found == true;
-            BlockPos = i;
+    for (unsigned int i = 0; i < blocksPerSet; ++i)
+    {
+        if (sets[index].blocks[i].tag == tag && sets[index].blocks[i].valid)
+        {
+            found = true;
+            blockPos = i;
             break;
         }
-        if (!sets[index][i].valid) {
+        if (!sets[index].blocks[i].valid)
+        {
             emptyBlockPos = i;
         }
     }
-    if (!found) {
+    if (!found)
+    {
         storeMisses++;
-        if (writeAllocate == "no-write-allocate") {
+        if (writeAllocate == "no-write-allocate")
+        {
             totalCycles += 100;
-        } else {
+        }
+        else
+        {
             totalCycles++;
-            if (emptyBlockPos == -1) {
+            if (emptyBlockPos == -1)
+            {
                 // TODO: Eviction Code
-            } else {
-                sets[index][emptyBlockPos].tag = tag;
-                sets[index][emptyBlockPos].valid = true;
+            }
+            else
+            {
+                sets[index].blocks[emptyBlockPos].tag = tag;
+                sets[index].blocks[emptyBlockPos].valid = true;
             }
         }
-    } else {
+    }
+    else
+    {
         storeHits++;
-        sets[index][blockPos].tag = tag;
-        if (writeThrough == "write-through") {
+        sets[index].blocks[blockPos].tag = tag;
+        if (writeThrough == "write-through")
+        {
             totalCycles += 101;
-        } else {
+        }
+        else
+        {
             totalCycles++;
-            sets[index][blockPos].dirty = true;
+            sets[index].blocks[blockPos].dirty = true;
         }
     }
 }
 
-void Cache::load(unsigned int address) {
+void Cache::load(unsigned int address)
+{
     // TODO
 }
 
-unsigned int uintLog2(unsigned int x)
+unsigned int Cache::uintLog2(unsigned int x)
 {
     unsigned int result = 0;
     while (x != 1)
@@ -130,4 +154,3 @@ unsigned int uintLog2(unsigned int x)
     }
     return result;
 }
-

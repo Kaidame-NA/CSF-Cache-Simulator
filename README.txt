@@ -3,6 +3,12 @@ Edward Wang - ewang43@jhu.edu
 
 schordi1 implementations:
     Makefile
+    getLoadHits
+    getLoadMisses
+    getTotalLoads
+    getTotalCycles
+    uintLog2
+    load
 ewang43 implementations:
     Makefile
     main
@@ -13,3 +19,4 @@ ewang43 implementations:
     getStoreHits
     getStoreMisses
     getTotalStores
+    load
