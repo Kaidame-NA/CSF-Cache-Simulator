@@ -86,7 +86,7 @@ unsigned int Cache::getTotalCycles() const
 void Cache::store(unsigned int address)
 {
     unsigned int index = (address >> uintLog2(blockSize)) % uintLog2(numSets);
-    unsigned int tag = address >> uintLog2(numSets);
+    unsigned int tag = address >> (uintLog2(numSets) + uintLog2(blockSize));
 
     Block *relevantBlock = getBlock(index, tag);
     if (relevantBlock == nullptr)
@@ -131,25 +131,26 @@ void Cache::store(unsigned int address)
 void Cache::load(unsigned int address)
 {
     unsigned int index = (address >> uintLog2(blockSize)) % uintLog2(numSets);
-    unsigned int tag = address >> uintLog2(numSets);
+    unsigned int tag = address >> (uintLog2(numSets) + uintLog2(blockSize));
 
     Block *relevantBlock = getBlock(index, tag);
-    if (relevantBlock == nullptr) {
+    if (relevantBlock == nullptr)
+    {
         loadMisses++;
         relevantBlock = getBlockToBeEvicted(index);
-            if (relevantBlock->dirty)
-            {
-                totalCycles += 100 * blockSize / 4;
-                relevantBlock->dirty = false;
-            }
-        // I added an extra 1 at the end because after it loads stuff from memory to the cache it still has to read form the cache 
+        if (relevantBlock->dirty)
+        {
+            totalCycles += 100 * blockSize / 4;
+            relevantBlock->dirty = false;
+        }
+        // I added an extra 1 at the end because after it loads stuff from memory to the cache it still has to read form the cache
         totalCycles += 100 * blockSize / 4 + 1;
         relevantBlock->tag = tag;
         relevantBlock->loadTimestamp = currentTimestamp;
         relevantBlock->accessTimestamp = currentTimestamp;
         relevantBlock->valid = true;
     }
-    else 
+    else
     {
         ++loadHits;
         ++totalCycles;
@@ -170,7 +171,7 @@ Cache::Block *Cache::getBlock(unsigned int index, unsigned int tag)
 
 Cache::Block *Cache::getBlockToBeEvicted(unsigned index)
 {
-    unsigned int oldestBlockTime= currentTimestamp;
+    unsigned int oldestBlockTime = currentTimestamp;
     unsigned int oldestBlockIndex;
     for (unsigned int i = 0; i < blocksPerSet; ++i)
     {
@@ -178,7 +179,8 @@ Cache::Block *Cache::getBlockToBeEvicted(unsigned index)
         {
             return &(sets[index].blocks[i]);
         }
-        if (sets[index].blocks[i].accessTimestamp < oldestBlockIndex) {
+        if (sets[index].blocks[i].accessTimestamp < oldestBlockIndex)
+        {
             oldestBlockTime = sets[index].blocks[i].accessTimestamp;
             oldestBlockIndex = i;
         }
