@@ -45,18 +45,15 @@ Cache::Cache(unsigned int nSets, unsigned int blocks, unsigned int bytes, string
 }
 
 unsigned int Cache::getLoadHits() const {
-    // TODO 
-    return 0;
+    return loadHits;
 }
 
 unsigned int Cache::getLoadMisses() const {
-    // TODO
-    return 0;
+    return loadMisses;
 }
 
 unsigned int Cache::getTotalLoads() const {
-    // TODO
-    return 0;
+    return loadHits + loadMisses;
 }
 
 unsigned int Cache::getStoreHits() const {
@@ -72,14 +69,26 @@ unsigned int Cache::getTotalStores() const {
 }
 
 unsigned int Cache::getTotalCycles() const {
-    // TODO
-    return 0;
+    return storeHits + storeMisses + loadHits + loadMisses;
 }
 
 void Cache::store(unsigned int address) {
-    // TODO
+    unsigned int tempAddress = address;
+    unsigned int set_position =  tempAddress >> intLog2(blockSize)
 }
 
 void Cache::load(unsigned int address) {
     // TODO
 }
+
+unsigned int intLog2(unsigned int x)
+{
+    unsigned int result = 0;
+    while (x != 1)
+    {
+        ++result;
+        x >>= 1;
+    }
+    return result;
+}
+

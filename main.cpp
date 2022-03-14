@@ -16,6 +16,7 @@ enum return_codes
 };
 
 using std::cerr;
+using std::cin;
 using std::cout;
 using std::string;
 
@@ -42,7 +43,6 @@ int main(int argc, char **argv)
     string writeAllocate = argv[4], writeThrough = argv[5], replacementPolicy = argv[6];
     
     Cache cache(stoi(sets), stoi(blocks), stoi(bytes), writeAllocate, writeThrough, replacementPolicy);
-
     return NO_ERROR;
 }
 
