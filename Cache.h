@@ -154,7 +154,6 @@ public:
      */
     void load(unsigned int address);
 
-
     unsigned int uintLog2(unsigned int x);
 };
 

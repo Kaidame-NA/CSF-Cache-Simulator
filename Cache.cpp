@@ -5,9 +5,13 @@
  * Sam Chordia: schordi1@jhu.edu
  */
 
+#include <iostream>
 #include <string>
 #include "Cache.h"
 
+using std::cerr;
+using std::cin;
+using std::cout;
 using std::string;
 
 Cache::Cache(unsigned int nSets, unsigned int blocks, unsigned int bytes, string writeAllocate, string writeThrough, string replacementPolicies)
