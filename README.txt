@@ -9,6 +9,8 @@ schordi1 implementations:
     getTotalCycles
     uintLog2
     load
+    store
+    getBlockToBeEvicted
 ewang43 implementations:
     Makefile
     main
@@ -22,3 +24,4 @@ ewang43 implementations:
     load
     getBlock
     getBlockToBeEvicted
+    store

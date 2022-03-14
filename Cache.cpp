@@ -85,7 +85,7 @@ unsigned int Cache::getTotalCycles() const
 
 void Cache::store(unsigned int address)
 {
-    unsigned int index = (address >> uintLog2(blockSize)) % uintLog2(numSets);
+    unsigned int index = (address >> uintLog2(blockSize)) % numSets;
     unsigned int tag = address >> (uintLog2(numSets) + uintLog2(blockSize));
 
     Block *relevantBlock = getBlock(index, tag);
@@ -130,7 +130,7 @@ void Cache::store(unsigned int address)
 
 void Cache::load(unsigned int address)
 {
-    unsigned int index = (address >> uintLog2(blockSize)) % uintLog2(numSets);
+    unsigned int index = (address >> uintLog2(blockSize)) % numSets;
     unsigned int tag = address >> (uintLog2(numSets) + uintLog2(blockSize));
 
     Block *relevantBlock = getBlock(index, tag);
