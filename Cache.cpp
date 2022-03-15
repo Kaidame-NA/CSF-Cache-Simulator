@@ -172,16 +172,21 @@ Cache::Block *Cache::getBlock(unsigned int index, unsigned int tag)
 Cache::Block *Cache::getBlockToBeEvicted(unsigned index)
 {
     unsigned int oldestBlockTime = currentTimestamp;
-    unsigned int oldestBlockIndex;
+    unsigned int oldestBlockIndex = 0;
     for (unsigned int i = 0; i < blocksPerSet; ++i)
     {
         if (!sets[index].blocks[i].valid)
         {
             return &(sets[index].blocks[i]);
         }
-        if (sets[index].blocks[i].accessTimestamp < oldestBlockIndex)
+        if (replacementPolicy == "lru" && sets[index].blocks[i].accessTimestamp < oldestBlockTime)
         {
             oldestBlockTime = sets[index].blocks[i].accessTimestamp;
+            oldestBlockIndex = i;
+        }
+        if (replacementPolicy == "fifo" && sets[index].blocks[i].loadTimestamp < oldestBlockTime)
+        {
+            oldestBlockTime = sets[index].blocks[i].loadTimestamp;
             oldestBlockIndex = i;
         }
     }
