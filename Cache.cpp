@@ -136,7 +136,7 @@ void Cache::load(unsigned int address)
     Block *relevantBlock = getBlock(index, tag);
     if (relevantBlock == nullptr)
     {
-        loadMisses++;
+        ++loadMisses;
         relevantBlock = getBlockToBeEvicted(index);
         if (relevantBlock->dirty)
         {
@@ -155,6 +155,7 @@ void Cache::load(unsigned int address)
         ++loadHits;
         ++totalCycles;
     }
+    ++currentTimestamp;
 }
 
 Cache::Block *Cache::getBlock(unsigned int index, unsigned int tag)
