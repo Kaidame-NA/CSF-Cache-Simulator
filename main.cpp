@@ -59,7 +59,7 @@ int main(int argc, char **argv)
         }
         command = 0;
     }
-    cout << "Total loads: " << cache.getTotalLoads() << "\nTotal stores: " << cache.getTotalStores() << "\nLoad hits: " << cache.getLoadHits() << "\nLoad misses: " << cache.getLoadMisses() << "\nStore hits: " << cache.getStoreHits() << "\nStore misses: " << cache.getStoreMisses() << "\nTotal cycle: " << cache.getTotalCycles() << "\n";
+    cout << "Total loads: " << cache.getTotalLoads() << "\nTotal stores: " << cache.getTotalStores() << "\nLoad hits: " << cache.getLoadHits() << "\nLoad misses: " << cache.getLoadMisses() << "\nStore hits: " << cache.getStoreHits() << "\nStore misses: " << cache.getStoreMisses() << "\nTotal cycles: " << cache.getTotalCycles() << "\n";
     return NO_ERROR;
 }
 
