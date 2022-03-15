@@ -11,6 +11,8 @@ schordi1 implementations:
     load
     store
     getBlockToBeEvicted
+    main
+    
 ewang43 implementations:
     Makefile
     main
