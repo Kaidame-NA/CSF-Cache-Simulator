@@ -46,9 +46,9 @@ int main(int argc, char **argv)
 
     char command;
     string address, value;
-    cin >> command >> address >> value;
-    while (command && !cin.eof())
+    while (!cin.eof())
     {
+        cin >> command >> address >> value;
         if (command == 's') 
         {
             cache.store(stoi(address, 0 , 16));
@@ -57,7 +57,7 @@ int main(int argc, char **argv)
         {
             cache.load(stoi(address, 0 , 16));
         }
-        cin >> command >> address >> value;
+        command = 0;
     }
     cout << "Total loads: " << cache.getTotalLoads() << "\nTotal stores: " << cache.getTotalStores() << "\nLoad hits: " << cache.getLoadHits() << "\nLoad misses: " << cache.getLoadMisses() << "\nStore hits: " << cache.getStoreHits() << "\nStore misses: " << cache.getStoreMisses() << "\nTotal cycle: " << cache.getTotalCycles() << "\n";
     return NO_ERROR;
