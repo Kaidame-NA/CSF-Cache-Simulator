@@ -117,6 +117,7 @@ void Cache::store(unsigned int address)
         if (relevantBlock != nullptr)
         {
             ++totalCycles;
+            relevantBlock->accessTimestamp = currentTimestamp;
         }
     }
     else
