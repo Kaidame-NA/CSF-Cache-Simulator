@@ -97,13 +97,14 @@ void Cache::store(unsigned int address)
             relevantBlock = getBlockToBeEvicted(index);
             if (relevantBlock->dirty)
             {
-                totalCycles += 100 * blockSize / 4;
+                totalCycles += 100 * blockSize / 4; // Write to memory
                 relevantBlock->dirty = false;
             }
             relevantBlock->tag = tag;
             relevantBlock->loadTimestamp = currentTimestamp;
             relevantBlock->accessTimestamp = currentTimestamp;
             relevantBlock->valid = true;
+            totalCycles += 100 * blockSize/4; // Load block from memory
         }
     }
     else
