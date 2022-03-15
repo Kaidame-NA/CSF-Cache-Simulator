@@ -51,11 +51,11 @@ int main(int argc, char **argv)
         cin >> command >> address >> value;
         if (command == 's') 
         {
-            cache.store(stoi(address, 0 , 16));
+            cache.store((unsigned int)stoul(address, nullptr , 16));
         }
         else if (command == 'l')
         {
-            cache.load(stoi(address, 0 , 16));
+            cache.load((unsigned int)stoul(address, nullptr , 16));
         }
         command = 0;
     }
