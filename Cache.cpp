@@ -112,7 +112,7 @@ void Cache::store(unsigned int address)
     }
     if (writeThrough == "write-through")
     {
-        totalCycles += 100 * blockSize / 4;
+        totalCycles += 100; // Only write the 4 bytes of data
         // Cache needs to be written to as well if the block is in the cache
         if (relevantBlock != nullptr)
         {
