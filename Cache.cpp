@@ -181,12 +181,12 @@ Cache::Block *Cache::getBlockToBeEvicted(unsigned index)
         {
             return &(sets[index].blocks[i]);
         }
-        if (replacementPolicy == "lru" && sets[index].blocks[i].accessTimestamp < oldestBlockTime)
+        if (replacementPolicy == "lru" && sets[index].blocks[i].accessTimestamp <= oldestBlockTime)
         {
             oldestBlockTime = sets[index].blocks[i].accessTimestamp;
             oldestBlockIndex = i;
         }
-        if (replacementPolicy == "fifo" && sets[index].blocks[i].loadTimestamp < oldestBlockTime)
+        if (replacementPolicy == "fifo" && sets[index].blocks[i].loadTimestamp <= oldestBlockTime)
         {
             oldestBlockTime = sets[index].blocks[i].loadTimestamp;
             oldestBlockIndex = i;
