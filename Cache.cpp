@@ -155,6 +155,7 @@ void Cache::load(unsigned int address)
     {
         ++loadHits;
         ++totalCycles;
+        relevantBlock->accessTimestamp = currentTimestamp;
     }
     ++currentTimestamp;
 }
