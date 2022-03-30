@@ -27,3 +27,7 @@ ewang43 implementations:
     getBlock
     getBlockToBeEvicted
     store
+
+
+Explanation:
+    Using a 1 MB cache as the test case. We would say that the 512 512 4 write-allocate write-back cache is most effective. However when altering the LRU and FIFO instruction, the total number of cycles did not change.
