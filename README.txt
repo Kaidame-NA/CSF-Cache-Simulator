@@ -12,6 +12,7 @@ schordi1 implementations:
     store
     getBlockToBeEvicted
     main
+    Experiment
     
 ewang43 implementations:
     Makefile
@@ -30,7 +31,7 @@ ewang43 implementations:
 
 
 Explanation:
-    In this experiement we used a 1024 KB cache for the experiment.
+    In this experiement we used a 1024 B cache.
     First we went through numerous differnt cache sizes (sets/blocks/associativity) to find the most effective size.
 
     example test runs: 
@@ -155,6 +156,7 @@ Explanation:
     Total cycles: 21956248
 
     Through the above experiemnts where we alter the combination of write-allocate, no-write-allocate, write-through, write-back, LRU and FIFO, we can see that the 
-    options with the lowest total cycles, hits and misses is teh cache with the setting - 1 256 4 write-allocate write-back lru
+    options with the lowest total cycles, hits and misses is the cache with the setting - 1 256 4 write-allocate write-back lru
+    This was tested with other files as well where it also had the results as the mose efficient cache.
 
     
