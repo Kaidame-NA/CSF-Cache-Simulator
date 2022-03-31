@@ -156,7 +156,13 @@ Explanation:
     Total cycles: 21956248
 
     Through the above experiemnts where we alter the combination of write-allocate, no-write-allocate, write-through, write-back, LRU and FIFO, we can see that the 
-    options with the lowest total cycles, hits and misses is the cache with the setting - 1 256 4 write-allocate write-back lru
-    This was tested with other files as well where it also had the results as the mose efficient cache.
+    options with the lowest total cycles and misses is the cache with the setting - 1 256 4 write-allocate write-back lru. This makes sense since a fully associative
+    cache is the one that will have the least cache misses because if we want to cache the data in memory locations with the same index, we do not need to evict as 
+    long as there is still space in the cache. Write-allocate and write-back also seem to be the best options. Although they incur a larger penalty during a store miss
+    since the data needs to be loaded into the cache and may need to write back if a block is evicted, whereas in no-write-allocate and write-through, a store miss
+    only costs the 100 cycles to write directly to memory, write-allocate and write-back makes up for it as there is less cost during a store hit (only costs 1 cycle)
+    and there are more likely to be store hits and load hits as we loaded the block into cache. So, if we are writing to a certain block of memory a lot, after the
+    first miss, write-allocate and write-back will only cost 1 cycle for each subsequent write, while write-through and no-write-allocate will cost 100 cycles every
+    write. This was tested with other files as well where it also had the results as the mose efficient cache.
 
     
